@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 29, 2021 at 11:05 PM
+-- Generation Time: Jul 29, 2021 at 11:56 PM
 -- Server version: 5.7.24
--- PHP Version: 7.4.11
+-- PHP Version: 7.4.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -141,7 +141,9 @@ CREATE TABLE `presensi` (
 INSERT INTO `presensi` (`id`, `nomor_pegawai`, `nama_lengkap`, `jabatan`, `sektor_area`, `tanggal`, `jam_masuk`, `jam_keluar`, `catatan_masuk`, `catatan_keluar`, `keterangan`, `created_at`, `updated_at`) VALUES
 (22, 'PGW-2019070001', 'Fabio Tavares', 'Cleaning Service', '1', '2021-06-28', '21:22:56', '21:23:04', 'Datang Telat ', 'Pulang Telat', NULL, '2021-06-28 07:22:56', '2021-06-28 07:23:04'),
 (23, 'PGW-2020060002', 'Roberto Firmino', 'Mandor', '1', '2021-06-28', '00:00:00', '00:00:00', '-', NULL, 'Cuti', '2021-06-28 07:23:28', '2021-06-28 07:23:28'),
-(24, 'PGW-2019070001', 'Fabio Tavares', 'Cleaning Service', '1', '2021-07-05', '00:00:00', '00:00:00', '-', NULL, 'Sakit', '2021-07-05 05:01:51', '2021-07-05 05:01:51');
+(24, 'PGW-2019070001', 'Fabio Tavares', 'Cleaning Service', '1', '2021-07-05', '00:00:00', '00:00:00', '-', NULL, 'Sakit', '2021-07-05 05:01:51', '2021-07-05 05:01:51'),
+(25, 'PGW-2019070001', 'Fabio Tavares', 'Cleaning Service', '1', '2021-07-30', '06:36:12', NULL, 'Datang Tepat Waktu ', NULL, NULL, '2021-07-29 16:36:12', '2021-07-29 16:36:12'),
+(26, 'PGW-2020060002', 'Roberto Firmino', 'Mandor', '1', '2021-07-30', '00:00:00', '00:00:00', '-', NULL, 'Cuti', '2021-07-29 16:36:37', '2021-07-29 16:36:37');
 
 -- --------------------------------------------------------
 
@@ -174,7 +176,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `nomor_pegawai`, `nama_depan`, `nama_belakang`, `nama_lengkap`, `tanggal_lahir`, `jenis_kelamin`, `email`, `email_verified_at`, `password`, `role`, `remember_token`, `jabatan`, `no_hp`, `foto_user`, `created_at`, `updated_at`) VALUES
-(1, 'PGW-2020060002', 'Roberto', 'Firmino', 'Roberto Firmino', '1991-10-02', 'L', 'sandiduta@gmail.com', NULL, '$2y$10$kmS/uegMCc5EoZQiLmzpfujeFHIxd1IefDYR6zcj9EhEtJoQhfNsG', 'SuperAdmin', 'IN0WnuJLnBIKtMvE9E25qx4lrEFOOoJ795vR2Y21ysn2BPSwPcDBV9KjyjYE', 'Mandor', NULL, '753.png', '2021-06-11 03:47:31', '2021-07-05 07:11:41'),
+(1, 'PGW-2020060002', 'Sandi', 'Maulana', 'Sandi Maulana', '1991-10-02', 'L', 'sandiduta@gmail.com', NULL, '$2y$10$Pg6IjHiYN0D5jdvDRJ5FUu6jb6usSjHVGCNZaPh3st9XP0EMKzQd2', 'SuperAdmin', '6bTSDLUJgy7XPszHaCJ6aLx71oumi3lEPjoRe1iuHmwqkuSKNfzYtDtHYEO1', 'Mandor', NULL, '753.png', '2021-06-11 03:47:31', '2021-07-29 16:38:05'),
 (2, 'PGW-2019070001', 'Fabio', 'Tavares', 'Fabio Tavares', '1993-10-23', 'Pilih', 'adams@gmail.com', NULL, '$2y$10$kP9x1t77RqCCGllGoa9e5usJwPNSmIN5T6yzUq./a0xv3OANVLbGO', 'SuperAdmin', 'UXWojWhaWuQnV62OS2pt0qIExcSyZBU01K8z6ztpvDt3UP6f81WyCTKHD4H1', 'Cleaning Service', NULL, NULL, '2021-06-14 23:54:09', '2021-06-17 01:20:41'),
 (3, '1234', 'Aldo', 'Kurnia', 'Aldo Kurnia', '1996-03-13', 'L', 'aldo@email.com', NULL, '$2y$10$bMGYDqgC3o6J7ug6Ip7g1ek7AgqGCV/Aq7329KOoz0tuPsqkbnO.W', 'Admin', 'uGt7mFxCw2WlSRwuMBcotY0JkdqXaVojnoZRIaPVJgALbFsd3I9nc1HODddR', 'Manajer', NULL, '753.png', '2021-06-28 03:10:37', '2021-06-28 03:10:37');
 
@@ -246,7 +248,7 @@ ALTER TABLE `pegawai`
 -- AUTO_INCREMENT for table `presensi`
 --
 ALTER TABLE `presensi`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `users`
