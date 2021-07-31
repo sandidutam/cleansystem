@@ -14,11 +14,17 @@ class AuthController extends Controller
 
     public function postlogin(Request $request)
     {
-        if(Auth::attempt($request->only('email','password')))
+        $loginDetails = $request->only('email','password');
+
+        if(Auth::attempt($loginDetails))
             {
                 return redirect('/dashboard');
+            } else {
+                
+                // return response()->json(['message'=>'wrong login details']);
+                return redirect('/login')->with('notifikasi_gagal','Email atau Password salah!');
             } 
-            return redirect('/login');
+
     }
 
     public function logout()

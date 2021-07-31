@@ -43,6 +43,18 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Selamat Datang!</h1>
                                     </div>
+                                    
+                                    @if(session('notifikasi_gagal'))
+                                    <div class="alert alert-danger alert-dismissable mt-4 fade show" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <i class="fa fa-exclamation-triangle"></i>
+                                        {{session('notifikasi_gagal')}}
+                                    </div>
+                                    @endif
+
+                               
                                     <form class="user" action="/postlogin" method="POST">
                                         {{csrf_field()}}
                                         <div class="form-group">
