@@ -92,6 +92,7 @@ active
                     - 
                     <?php endif; ?>
                 </td> 
+                
                 <td>
                     <?php if($pegawai->keterangan == null): ?>
                     <?php echo e($pegawai->jam_keluar); ?>
@@ -136,8 +137,7 @@ active
             </tr>
             <?php endif; ?>
         </table>
-        <?php echo e($data_presensi->links()); ?>
-
+        
         
 
     </div>

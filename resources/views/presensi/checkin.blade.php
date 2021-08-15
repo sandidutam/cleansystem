@@ -65,7 +65,17 @@
 
             </div>
         </div>
-            
+        <div class="row mb-2 justify-content-center invisible">
+            <div class="col-6 ">
+                <div class="form-group {{$errors->has('id') ? 'has-error' : ''}}">
+                    <label for="id" class="form-label"> ID : </label> 
+                    {!! Form::text('id', null, ['class'=>'form-control','id'=>'id','name'=>'id','readonly']) !!}
+                    @if($errors->has('id'))
+                        <span class="help-block text-danger">{{$errors->first('id')}}</span>
+                    @endif
+                </div>
+            </div>
+        </div>    
         <div class="row mb-2 justify-content-center">
             <div class="col-6 ">
                 <div class="form-group {{$errors->has('nomor_pegawai') ? 'has-error' : ''}}">

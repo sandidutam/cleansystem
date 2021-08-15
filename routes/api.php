@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\apiController;
 use App\Models\User;
+use App\Models\Presensi;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -75,11 +76,21 @@ Route::post('/sanctum/token', function (Request $request){
 Route::get('/dummy', [apiController::class, 'dummy']);
 
 Route::get('/presensi/{id}/get', function ($id) {
+    $data_presensi = Presensi::where('pegawai_id', '=', $id)->get();
+
     $data_pegawai = Pegawai::find($id);
-    return response()->json($data_pegawai);
+
+    $response = [
+        'data_presensi' => $data_presensi,
+        'data_pegawai' => $data_pegawai
+    ];
+
+    // return $id;s
+    return response()->json($response);
 });
 
-Route::post('/presensi/store', [apiController::class, 'store']);
+Route::post('/presensi/present', [apiController::class, 'present']);
+Route::post('/presensi/absent', [apiController::class, 'absent']);
 Route::put('/presensi/{id}/update',[apiController::class, 'update']);
 
 

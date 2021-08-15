@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddQrcodeToPegawai extends Migration
+class AddPegawaiIdToPresensiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddQrcodeToPegawai extends Migration
      */
     public function up()
     {
-        Schema::table('pegawai', function (Blueprint $table) {
-            //
-            $table->string('qr_code');
+        Schema::table('presensi', function (Blueprint $table) {
+            $table->bigInteger('pegawai_id');
         });
     }
 
@@ -26,9 +25,8 @@ class AddQrcodeToPegawai extends Migration
      */
     public function down()
     {
-        Schema::table('pegawai', function (Blueprint $table) {
-            //
-            $table->dropColumn('qr_code');
+        Schema::table('presensi', function (Blueprint $table) {
+            $table->dropColumn('pegawai_id');
         });
     }
 }

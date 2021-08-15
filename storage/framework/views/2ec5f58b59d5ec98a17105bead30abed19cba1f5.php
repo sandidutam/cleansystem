@@ -62,7 +62,18 @@
 
             </div>
         </div>
-            
+        <div class="row mb-2 justify-content-center invisible">
+            <div class="col-6 ">
+                <div class="form-group <?php echo e($errors->has('id') ? 'has-error' : ''); ?>">
+                    <label for="id" class="form-label"> ID : </label> 
+                    <?php echo Form::text('id', null, ['class'=>'form-control','id'=>'id','name'=>'id','readonly']); ?>
+
+                    <?php if($errors->has('id')): ?>
+                        <span class="help-block text-danger"><?php echo e($errors->first('id')); ?></span>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>    
         <div class="row mb-2 justify-content-center">
             <div class="col-6 ">
                 <div class="form-group <?php echo e($errors->has('nomor_pegawai') ? 'has-error' : ''); ?>">

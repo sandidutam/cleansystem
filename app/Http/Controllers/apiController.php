@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Pegawai;
+use App\Models\Presensi;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class apiController extends Controller
@@ -36,7 +41,7 @@ class apiController extends Controller
         // ]);
     }
 
-    public function store(Request $request)
+    public function present(Request $request)
     {
         
         $date = date("Y-m-d");
@@ -56,115 +61,162 @@ class apiController extends Controller
 
         $check_nopeg = Presensi::where('nomor_pegawai','=',$request->nomor_pegawai)->get();
         $check_date = Presensi::where('tanggal','=',$current_time)->count();
-  
+        $nama = $request->nama_lengkap;
+
         $presensi = new Presensi();
         
         // Awal Fungsi Absen Masuk
 
-        if(isset($request->btn_masuk)) 
+        $check_for_double = DB::table('presensi')
+                                ->where('tanggal' ,'=', $today )
+                                ->where('nomor_pegawai' ,'=', $request->nomor_pegawai)
+                                ->count();
+
+        if ($check_for_double > 0) {
+            return response()->json('Pegawai '.$nama.' hanya bisa absen masuk sekali dalam sehari !');
+        }
+        
+        if( $today ) 
         {
             
-            $check_for_double = DB::table('presensi')
-                                    ->where('tanggal' ,'=', $today )
-                                    ->where('nomor_pegawai' ,'=', $request->nomor_pegawai)
-                                    ->count();
+            if( $check_time > $batas_awal_waktu_masuk && $check_time < $batas_akhir_waktu_masuk ) 
+            {
+                $note = 'Datang Tepat Waktu ';
 
-            if ($check_for_double > 0) {
-
-                return response()->json('Pegawai hanya bisa absen masuk sekali dalam sehari !');
-                // return redirect()->route('presensi.history')->with('notifikasi_gagal','Pegawai hanya bisa absen masuk sekali dalam sehari !');
+            } 
+            elseif( $check_time > $batas_akhir_waktu_masuk) 
+            {
+                $note = 'Datang Telat ';
+            } 
+            else 
+            {
+                return response()->json('Belum bisa absen!');
             }
 
             
-            if( $today ) 
-            {
-                
-                if( $check_time > $batas_awal_waktu_masuk && $check_time < $batas_akhir_waktu_masuk ) 
-                {
-                    $note = 'Datang Tepat Waktu ';
-                    // return "aku tepat waktu";
-                } elseif( $check_time > $batas_akhir_waktu_masuk) 
-                {
-                    $note = 'Datang Telat ';
-                    // return $current_time;
-                    // return $check_time;
-                    // return "telat";
-                } else 
-                {
-                    // return $check_time;
-                    // return $id;
-                    // return $batas_akhir_waktu_masuk;
-                    // return $batas_awal_waktu_masuk;
-                    // return "Angling Dharma";
-                    // return view ('presensi.history')->with('notifikasi_sukses','Belum bisa absen!');
-                    // return redirect('/presensi/riwayat')->with('notifikasi_gagal','Belum bisa absen');
-                    return response()->json('Belum bisa absen!');
-                }
-                $nama = $request->nama_lengkap;
-                $presensi->nomor_pegawai = $request->nomor_pegawai;
-                $presensi->nama_lengkap = $request->nama_lengkap;
-                $presensi->jabatan = $request->jabatan;
-                $presensi->sektor_area = $request->sektor_area;
-                $presensi->tanggal = $today;
-                $presensi->jam_masuk = $current_time;
-                $presensi->catatan_masuk = $note;
-
-                // dd($presensi);
-
-                $simpan = $presensi->save();
-               
-                if( $simpan ) 
-                {
-                    // return redirect('/presensi/riwayat')->with('notifikasi_sukses', $nama.' sudah datang !');
-                    return response()->json($nama.' sudah datang !');
-                }
-            } else {
-                // return redirect('/presensi/riwayat')->with('notifikasi_gagal','Pegawai hanya bisa absen masuk sekali dalam sehari !');
-                return response()->json('Pegawai hanya bisa absen masuk sekali dalam sehari !');
-            }  
-        }   
-
-
-        elseif(isset($request->btn_absen))
-        {   
-            // return "Izin";
-            $check_for_double = DB::table('presensi')
-                                    ->where('tanggal' ,'=', $today )
-                                    ->where('nomor_pegawai' ,'=', $request->nomor_pegawai)
-                                    ->count();
-
-            if ($check_for_double > 0) {
-                return redirect()->route('presensi.history')->with('notifikasi_gagal','Pegawai hanya bisa absen masuk sekali dalam sehari !');
-            }
-
-            $nama = $request->nama_lengkap;
-            $ket = $request->keterangan;
-
+            $presensi->pegawai_id = $request->id;
             $presensi->nomor_pegawai = $request->nomor_pegawai;
             $presensi->nama_lengkap = $request->nama_lengkap;
             $presensi->jabatan = $request->jabatan;
             $presensi->sektor_area = $request->sektor_area;
             $presensi->tanggal = $today;
-            $presensi->jam_masuk = "-";
-            $presensi->catatan_masuk = "-";
-            $presensi->jam_keluar = "-";
-            $presensi->keterangan = $request->keterangan;
-
+            $presensi->jam_masuk = $current_time;
+            $presensi->catatan_masuk = $note;
             // dd($presensi);
-
             $simpan = $presensi->save();
-
-            if( $simpan )
+           
+            if( $simpan ) 
             {
-                // return redirect('/presensi/riwayat');
-                
-                return redirect()->route('presensi.history')->with('notifikasi_tidak_masuk', $nama." hari ini ".$ket );
+                // return redirect('/presensi/riwayat')->with('notifikasi_sukses', $nama.' sudah datang !');
+                return response()->json($nama.' sudah datang '.$note);
             }
-
-        } else {
-            return "Gagal";
         }
     
+    }
+
+    public function absent(Request $request)
+    {
+        $nama = $request->nama_lengkap;
+        $today = Carbon::now()->timezone('Asia/Jakarta')->format('Y-m-d');
+        $check_for_double = DB::table('presensi')
+        ->where('tanggal' ,'=', $today )
+        ->where('nomor_pegawai' ,'=', $request->nomor_pegawai)
+        ->count();
+
+        if ($check_for_double > 0) {
+        return response()->json('Pegawai '.$nama.' hanya bisa absen masuk sekali dalam sehari !');
+        }
+
+        
+        $ket = $request->keterangan;
+
+        $presensi->pegawai_id = $request->id;
+        $presensi->nomor_pegawai = $request->nomor_pegawai;
+        $presensi->nama_lengkap = $request->nama_lengkap;
+        $presensi->jabatan = $request->jabatan;
+        $presensi->sektor_area = $request->sektor_area;
+        $presensi->tanggal = $today;
+        $presensi->jam_masuk = "-";
+        $presensi->catatan_masuk = "-";
+        $presensi->jam_keluar = "-";
+        $presensi->keterangan = $request->keterangan;
+
+        // dd($presensi);
+
+        $simpan = $presensi->save();
+
+        if( $simpan )
+        {
+        // return redirect('/presensi/riwayat');
+
+        return response()->json($nama." pada tanggal ".$today.$ket );
+        }
+
+    }
+
+    public function update(Request $request, $id)
+    {
+        
+        // $np = $request->nomor_pegawai;
+
+        $presensi = Presensi::findOrFail($id);
+        $pegawai_id = $request->pegawai_id;
+        $nama = $request->nama_lengkap;
+        // $nama = $request->nama_lengkap;
+        
+        $batas_awal_waktu_keluar = Carbon::createFromFormat('H:i:s', '16:30:00')->format('H'.'i'.'s');
+        $batas_akhir_waktu_keluar = Carbon::createFromFormat('H:i:s', '17:30:00')->format('H'.'i'.'s');
+       
+        $today = Carbon::now()->timezone('Asia/Jakarta')->format('Y-m-d');
+        $current_time = Carbon::now()->timezone('Asia/Jakarta')->format('H:i:s');
+        $check_time = Carbon::createFromFormat('H:i:s', $current_time)->format('H'.'i'.'s');
+
+        // $time > $batas_awal_waktu_keluar && $time < $batas_akhir_waktu_keluar
+
+
+        $check_for_double = DB::table('presensi')
+                                ->where('pegawai_id' ,'=', $pegawai_id)
+                                ->where('tanggal' ,'=', $today )
+                                // ->where('nomor_pegawai' ,'=', $request->nomor_pegawai)
+                                ->whereNotNull('jam_keluar')
+                                ->count();
+                                // ->get();
+
+        // debug
+        // if ($check_for_double == 0) {
+        //     return $check_for_double;
+            
+        // }   else  {
+        //     return "empty";
+        // }
+
+       
+
+        if ($check_for_double > 0 ) {
+            return response()->json('Pegawai '.$nama.' hanya bisa absen keluar sekali dalam sehari !');
+        }
+
+        if( $check_time < $batas_awal_waktu_keluar)
+        {
+            $note = 'Izin Pulang Lebih Awal';
+        } elseif ( $check_time > $batas_awal_waktu_keluar && $check_time < $batas_akhir_waktu_keluar ) { 
+            $note = 'Pulang Tepat Waktu';
+        } else {
+            $note = 'Pulang Telat';
+        }
+        // $presensi->$check_nopeg;
+        // $presensi->where(['tanggal'=>$today, 'nomor_pegawai' => $nomor_pegawai]);
+        
+        $presensi->jam_keluar = $current_time;
+        $presensi->catatan_keluar = $note;
+        $simpan = $presensi->update();
+
+        if( $simpan ) 
+        {
+            return response()->json($nama.' sudah pulang pada jam '.$current_time);
+        }
+        
+
     }
 
 }

@@ -49,5 +49,14 @@ class Pegawai extends Model
         return $getId = DB::table('pegawai')->orderBy('id','DESC')->take(1)->get();
     }
 
+    /**
+     * Get all of the pegawai for the Pegawai
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function presensi()
+    {
+        return $this->hasMany(Presensi::class,'pegawai_id');
+    }
     
 }

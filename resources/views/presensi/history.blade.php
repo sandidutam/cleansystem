@@ -87,7 +87,8 @@ active
                     @else 
                     - 
                     @endif
-                </td> {{-- View Tanggal diubah dari Y-m-d ke d-m-Y --}}
+                </td> 
+                {{-- View Tanggal diubah dari Y-m-d ke d-m-Y --}}
                 <td>
                     @if($pegawai->keterangan == null)
                     {{$pegawai->jam_keluar}}
@@ -128,7 +129,7 @@ active
             </tr>
             @endforelse
         </table>
-        {{ $data_presensi->links() }}
+        {{-- {{ $data_presensi->links() }} --}}
         {{-- {{ dd($data_presensi->links() )}} --}}
 
     </div>

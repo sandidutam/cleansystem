@@ -22,4 +22,22 @@ class Presensi extends Model
             'catatan_keluar',
             'keterangan'
     ];
+
+    /**
+     * Get the pegawai that owns the Presensi
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+
+    public function pegawai()
+    {
+        return $this->belongsTo(Pegawai::class,'pegawai_id');
+    }
+
+    /**
+     * Get the user that owns the Presensi
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+  
 }

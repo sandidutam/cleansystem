@@ -85,8 +85,11 @@ class PresensiController extends Controller
     public function history()
     {
         $data_presensi = Presensi::orderBy('id','DESC')->paginate(10);
+
+        // $data_pegawai = Pegawai::all();
         // $data_presensi = DB::table('presensi')->paginate(1);
         // $data_presensi = Presensi::all()->paginate(1);
+
         return view('presensi.history', compact('data_presensi'));
     }
 
@@ -194,6 +197,7 @@ class PresensiController extends Controller
                     // return view ('presensi.history')->with('notifikasi_sukses','Belum bisa absen!');
                 }
                 $nama = $request->nama_lengkap;
+                $presensi->pegawai_id = $request->id;
                 $presensi->nomor_pegawai = $request->nomor_pegawai;
                 $presensi->nama_lengkap = $request->nama_lengkap;
                 $presensi->jabatan = $request->jabatan;
@@ -201,6 +205,8 @@ class PresensiController extends Controller
                 $presensi->tanggal = $today;
                 $presensi->jam_masuk = $current_time;
                 $presensi->catatan_masuk = $note;
+
+               
 
                 // dd($presensi);
 
