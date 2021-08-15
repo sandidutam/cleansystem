@@ -40,11 +40,12 @@ show
                         <th>NO</th>
                         <th>NOMOR PEGAWAI</th>
                         <th>NAMA LENGKAP</th>
-                        <th>TANGGAL LAHIR</th>
+                        
                         <th>JABATAN</th>
                         <th>SEKTOR</th>
                         <th>PENEMPATAN</th>
                         <th>TANGGAL DITERIMA</th>
+                        <th>QR CODE</th>
                         <th>AKSI</th>
                     </tr>
                 
@@ -54,11 +55,12 @@ show
                         <td><?= $i; ?></td>
                         <td><?php echo e($pegawai->nomor_pegawai); ?></td>
                         <td><a href="<?php echo e(route('pegawai.show', $pegawai->id)); ?>"><?php echo e($pegawai->nama_lengkap); ?></a></td>
-                        <td><?php echo e(date('d-m-Y', strtotime($pegawai->tanggal_lahir))); ?></td>
+                        
                         <td><?php echo e($pegawai->jabatan); ?></td>
                         <td><?php echo e($pegawai->sektor_area); ?></td>
                         <td><?php echo e($pegawai->penempatan); ?></td>
                         <td><?php echo e(date('d-m-Y', strtotime($pegawai->tanggal_diterima))); ?></td> 
+                        <td><?php echo QrCode::size(200)->generate('http://192.168.100.109:8000/api/presensi/'.$pegawai->id.'/get');; ?></td>
                         <td>
                             <div class="row">
                                 <div class="col-4">

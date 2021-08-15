@@ -7,6 +7,9 @@ use App\Models\Pegawai;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Crypt;
 
 class PegawaiController extends Controller
 {
@@ -91,7 +94,12 @@ class PegawaiController extends Controller
             $nama_depan = $request->nama_depan;
             $nama_belakang = $request->nama_belakang;
             $nama_lengkap = $nama_depan." ".$nama_belakang;
-    
+
+            $protoqr = QrCode::generate('http://192.168.100.109:8000/api/presensi/'.$idbaru.'/get');
+            
+
+            // return $protoqr;
+
             // Hasil Input dimasukkan ke database
             $data = new Pegawai();
             $data->nomor_pegawai = $no_pegawai;
@@ -112,8 +120,12 @@ class PegawaiController extends Controller
             $data->penempatan = $request->penempatan;
             $data->sektor_area = $request->sektor_area;
             $data->tanggal_diterima = $request->tanggal_diterima ;
+            // $data->qr_code = $protoqr;
             // $data->foto_pegawai = $request->foto_pegawai;
-    
+   
+            // return $postqr;
+            // return $protoqr;
+
             if($request->hasFile('foto_pegawai')) {
                 $request->file('foto_pegawai')->move('images/',$request->file('foto_pegawai')->getClientOriginalName());
                 $data->foto_pegawai = $request->file('foto_pegawai')->getClientOriginalName();

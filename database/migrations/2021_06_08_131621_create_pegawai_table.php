@@ -35,6 +35,7 @@ class CreatePegawaiTable extends Migration
             $table->date('tanggal_diterima');
             $table->string('no_hp')->nullable();
             $table->string('foto_pegawai');
+            // $table->string('qr_code');
             $table->timestamps();
         });
     }

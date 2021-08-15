@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 
 class Pegawai extends Model
 {
@@ -30,7 +31,8 @@ class Pegawai extends Model
         'sektor_area',
         'tanggal_diterima',
         'no_hp',
-        'foto_pegawai'
+        'foto_pegawai',
+
     ];
 
     public function getFotoPegawai()
@@ -47,4 +49,5 @@ class Pegawai extends Model
         return $getId = DB::table('pegawai')->orderBy('id','DESC')->take(1)->get();
     }
 
+    
 }

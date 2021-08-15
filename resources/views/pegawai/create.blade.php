@@ -31,7 +31,7 @@
             <div class="row">
                 <div class="col">
                     {{-- Awal Card Informasi Pribadi --}}
-                    <div class="card mb-3">
+                    <div class="card mb-3" style="height: 100%">
                         <div class="card-header border-left-primary">
                             <h5 class="text-center ">Informasi Pribadi</h5>
                         </div>
@@ -159,7 +159,7 @@
                 
                 <div class="col">
                     {{-- Awal Card Informasi Pegawai --}}
-                    <div class="card mb-3">
+                    <div class="card mb-3" style="height: 100%">
                         <div class="card-header border-left-warning">
                             <h5 class="text-center">Informasi Pegawai</h5>
                         </div>

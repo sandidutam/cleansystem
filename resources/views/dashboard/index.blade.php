@@ -10,5 +10,9 @@ active
 
 @section('content')
 
-<h1>Welcome</h1>
+<div class="card">
+    <h1>Welcome</h1>
+    {!! QrCode::size(500)->generate('Ahay'); !!}
+
+</div>
 @endsection

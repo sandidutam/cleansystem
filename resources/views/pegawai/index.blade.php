@@ -47,11 +47,12 @@ show
                         <th>NO</th>
                         <th>NOMOR PEGAWAI</th>
                         <th>NAMA LENGKAP</th>
-                        <th>TANGGAL LAHIR</th>
+                        {{-- <th>TANGGAL LAHIR</th> --}}
                         <th>JABATAN</th>
                         <th>SEKTOR</th>
                         <th>PENEMPATAN</th>
                         <th>TANGGAL DITERIMA</th>
+                        <th>QR CODE</th>
                         <th>AKSI</th>
                     </tr>
                 
@@ -61,11 +62,12 @@ show
                         <td><?= $i; ?></td>
                         <td>{{$pegawai->nomor_pegawai}}</td>
                         <td><a href="{{ route('pegawai.show', $pegawai->id) }}">{{$pegawai->nama_lengkap}}</a></td>
-                        <td>{{date('d-m-Y', strtotime($pegawai->tanggal_lahir))}}</td>
+                        {{-- <td>{{date('d-m-Y', strtotime($pegawai->tanggal_lahir))}}</td> --}}
                         <td>{{$pegawai->jabatan}}</td>
                         <td>{{$pegawai->sektor_area}}</td>
                         <td>{{$pegawai->penempatan}}</td>
                         <td>{{date('d-m-Y', strtotime($pegawai->tanggal_diterima))}}</td> {{-- View Tanggal diubah dari Y-m-d ke d-m-Y --}}
+                        <td>{!! QrCode::size(200)->generate('http://192.168.100.109:8000/api/presensi/'.$pegawai->id.'/get'); !!}</td>
                         <td>
                             <div class="row">
                                 <div class="col-4">
