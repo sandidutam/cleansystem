@@ -61,7 +61,7 @@
                             <img class="img-profil-pegawai img-thumbnail" style="margin-top: 50px; margin-bottom: 25px" src="<?php echo e($data_pegawai->getFotoPegawai()); ?>" alt="">
                             <h3 class="mt-2 mb-2"><strong><?php echo e($data_pegawai->nama_lengkap); ?></strong></h3>
                             <p class="mt-2" ><?php echo e($data_pegawai->jabatan); ?> di Sektor <?php echo e($data_pegawai->sektor_area); ?></p>
-                            <p class="mt-2" ><?php echo QrCode::size(200)->generate('http://192.168.100.109:8000/api/presensi/'.$data_pegawai->id.'/get');; ?> </p>
+                            <p class="mt-2" ><?php echo QrCode::size(200)->generate($data_pegawai->id);; ?> </p>
 
                         </div>
                         <div class="col">

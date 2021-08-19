@@ -67,7 +67,7 @@ show
                         <td>{{$pegawai->sektor_area}}</td>
                         <td>{{$pegawai->penempatan}}</td>
                         <td>{{date('d-m-Y', strtotime($pegawai->tanggal_diterima))}}</td> {{-- View Tanggal diubah dari Y-m-d ke d-m-Y --}}
-                        <td>{!! QrCode::size(200)->generate('http://192.168.100.109:8000/api/presensi/'.$pegawai->id.'/get'); !!}</td>
+                        <td>{!! QrCode::size(200)->generate($pegawai->id); !!}</td>
                         <td>
                             <div class="row">
                                 <div class="col-4">

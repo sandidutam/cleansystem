@@ -76,6 +76,7 @@ Route::post('/sanctum/token', function (Request $request){
 Route::get('/dummy', [apiController::class, 'dummy']);
 
 Route::get('/presensi/{id}/get', function ($id) {
+    $id - $request->id;
     $data_presensi = Presensi::where('pegawai_id', '=', $id)->get();
 
     $data_pegawai = Pegawai::find($id);
@@ -89,9 +90,17 @@ Route::get('/presensi/{id}/get', function ($id) {
     return response()->json($response);
 });
 
+
+// Get the desired data for attendant system
+
+Route::post('/presensi/getpresent', [apiController::class, 'getpresent']);
+Route::post('/presensi/getupdate', [apiController::class, 'getupdate']);
+
+
 Route::post('/presensi/present', [apiController::class, 'present']);
-Route::post('/presensi/absent', [apiController::class, 'absent']);
-Route::put('/presensi/{id}/update',[apiController::class, 'update']);
+
+Route::post('/presensi/absent', [apiController::class, 'absent'])->name('absent');
+Route::put('/presensi/{id}/update',[apiController::class, 'update'])->name('present.update');
 
 
 Route::group(['middleware' => 'auth:sanctum'], function(){

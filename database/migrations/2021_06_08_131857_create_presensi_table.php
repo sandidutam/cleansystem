@@ -15,6 +15,7 @@ class CreatePresensiTable extends Migration
     {
         Schema::create('presensi', function (Blueprint $table) {
             $table->id();
+            $table->string('pegawai_id');
             $table->string('nomor_pegawai');
             $table->string('nama_lengkap');
             $table->string('jabatan');

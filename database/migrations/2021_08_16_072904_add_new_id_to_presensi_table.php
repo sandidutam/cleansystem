@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPegawaiIdToPresensiTable extends Migration
+class AddNewIdToPresensiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,6 +15,7 @@ class AddPegawaiIdToPresensiTable extends Migration
     {
         Schema::table('presensi', function (Blueprint $table) {
             $table->bigInteger('pegawai_id');
+            $table->bigInteger('presensi_id');
         });
     }
 
@@ -27,6 +28,7 @@ class AddPegawaiIdToPresensiTable extends Migration
     {
         Schema::table('presensi', function (Blueprint $table) {
             $table->dropColumn('pegawai_id');
+            $table->dropColumn('presensi_id');
         });
     }
 }

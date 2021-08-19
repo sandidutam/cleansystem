@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Presensi extends Model
 {
@@ -28,6 +29,11 @@ class Presensi extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
+    public static function getId()
+    {
+        return $getId = DB::table('presensi')->orderBy('id','DESC')->take(1)->get();
+    }
+
 
     public function pegawai()
     {

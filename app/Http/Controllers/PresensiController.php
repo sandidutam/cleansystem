@@ -155,7 +155,25 @@ class PresensiController extends Controller
 
         $check_nopeg = Presensi::where('nomor_pegawai','=',$request->nomor_pegawai)->get();
         $check_date = Presensi::where('tanggal','=',$current_time)->count();
-  
+        
+        
+        // $id = Presensi::getId();
+        // $index = Presensi::all();
+        
+        // if($index->isEmpty()) {
+            
+        //     $idbaru = 0;
+        //     $presensi_id = $idbaru+1;
+        // } else {
+        //     foreach ($id as $value);
+        //     $idlama = $value->id;
+        //     $idbaru = $idlama+1;
+       
+        //     $presensi_id = $idbaru;
+        // }
+
+
+
         $presensi = new Presensi();
         
         // Awal Fungsi Absen Masuk
@@ -197,6 +215,7 @@ class PresensiController extends Controller
                     // return view ('presensi.history')->with('notifikasi_sukses','Belum bisa absen!');
                 }
                 $nama = $request->nama_lengkap;
+                // $presensi->presensi_id = $presensi_id;
                 $presensi->pegawai_id = $request->id;
                 $presensi->nomor_pegawai = $request->nomor_pegawai;
                 $presensi->nama_lengkap = $request->nama_lengkap;

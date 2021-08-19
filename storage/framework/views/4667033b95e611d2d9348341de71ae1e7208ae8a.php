@@ -60,7 +60,7 @@ show
                         <td><?php echo e($pegawai->sektor_area); ?></td>
                         <td><?php echo e($pegawai->penempatan); ?></td>
                         <td><?php echo e(date('d-m-Y', strtotime($pegawai->tanggal_diterima))); ?></td> 
-                        <td><?php echo QrCode::size(200)->generate('http://192.168.100.109:8000/api/presensi/'.$pegawai->id.'/get');; ?></td>
+                        <td><?php echo QrCode::size(200)->generate($pegawai->id);; ?></td>
                         <td>
                             <div class="row">
                                 <div class="col-4">
